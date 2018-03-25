@@ -7,7 +7,10 @@ describe AStar do
 
     a.connect b, 3
     
-    AStar.new { |node1, node2| 0 }.search(a, b).should eq([a, b])
+    path = AStar.search a, b, do |node1, node2|
+      0
+    end
+    path.should eq([a, b])
   end
 
   it "search shortest path of two possible" do
@@ -24,7 +27,10 @@ describe AStar do
     # short route 
     b.connect d, 1
 
-    AStar.new { |node1, node2| 0 }.search(a, d).should eq([a, b, d])
+    path = AStar.search a, d, do |node1, node2|
+      0
+    end
+    path.should eq([a, b, d])
   end
 
   it "no possible path" do
@@ -35,12 +41,27 @@ describe AStar do
     # no connection to goal
     a.connect b, 2
 
-    AStar.new { |node1, node2| 0 }.search(a, c).should be_nil
+    path = AStar.search a, c, do |node1, node2|
+      0
+    end
+    path.should be_nil
   end
-end
 
+  it "use node data" do
+    a = AStar::Node.new({x: 0, y: 0})
+    b = AStar::Node.new({x: 0, y: 0})
+    c = AStar::Node.new({x: 0, y: 0})
+    d = AStar::Node.new({x: 0, y: 0})
+    e = AStar::Node.new({x: 0, y: 0})
 
-  it "works" do
-    false.should eq(true)
+    a.connect b, 1
+    b.connect c, 3
+    c.connect d, 2
+    d.connect e, 4
+
+    path = AStar.search a, e do |node1, node2|
+      node1.data[:x] + node2.data[:x]
+    end
+    path.should eq([a, b, c, d, e])
   end
 end

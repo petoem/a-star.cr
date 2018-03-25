@@ -1,3 +1,3 @@
-class AStar
+module AStar
   VERSION = "0.1.0"
 end

@@ -1,14 +1,14 @@
 require "./a-star/*"
 
-class AStar
-  def initialize(&@heuristic : Node, Node -> Number::Primitive); end
+module AStar
+  extend self
 
-  def search(start : Node, goal : Node) : Array(Node)?
-    open = [] of Node
-    closed = [] of Node
+  def search(start : T, goal : T, &block) forall T
+    open = [] of T
+    closed = [] of T
     open << start
     start.g = 0
-    start.f = @heuristic.call start, goal
+    start.f = yield start, goal
 
     until open.empty?
       current = open.sort!.first
@@ -23,7 +23,7 @@ class AStar
         unless (new_g = current.g + distance) >= neighbor.g
           neighbor.parent = current
           neighbor.g = new_g
-          neighbor.f = new_g + @heuristic.call neighbor, goal
+          neighbor.f = new_g + yield neighbor, goal
         end
       end
     end
@@ -34,8 +34,8 @@ class AStar
     nil
   end
 
-  private def reconstruct_path(node : Node)
-    path = [] of Node
+  private def reconstruct_path(node)
+    path = [] of typeof(node)
     path << node
     while node = node.parent
       path << node
@@ -43,18 +43,18 @@ class AStar
     path.reverse!
   end
 
-  class Node
+  class Node(T)
     include Comparable(self)
 
-    getter name : String
-    property parent : Node?
+    getter data : T
+    property parent : self?
     property g : Number::Primitive = Float64::INFINITY
     property f : Number::Primitive = Float64::INFINITY
-    getter neighbor = Hash(Node, Number::Primitive).new
+    getter neighbor = Hash(self, Number::Primitive).new
 
-    def initialize(@name = ""); end
+    def initialize(@data : T = nil); end
 
-    def connect(node : Node, distance : Number::Primitive)
+    def connect(node : self, distance : Number::Primitive)
       @neighbor[node] = distance
       node.neighbor[self] = distance
     end
