@@ -6,8 +6,8 @@ describe AStar do
     b = AStar::Node.new "B"
 
     a.connect b, 3
-    
-    path = AStar.search a, b, do |node1, node2|
+
+    path = AStar.search a, b do |node1, node2|
       0
     end
     path.should eq([a, b])
@@ -24,10 +24,10 @@ describe AStar do
     b.connect c, 3
     c.connect d, 2
 
-    # short route 
+    # short route
     b.connect d, 1
 
-    path = AStar.search a, d, do |node1, node2|
+    path = AStar.search a, d do |node1, node2|
       0
     end
     path.should eq([a, b, d])
@@ -41,7 +41,7 @@ describe AStar do
     # no connection to goal
     a.connect b, 2
 
-    path = AStar.search a, c, do |node1, node2|
+    path = AStar.search a, c do |node1, node2|
       0
     end
     path.should be_nil
