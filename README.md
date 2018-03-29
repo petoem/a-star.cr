@@ -1,6 +1,8 @@
 # A* pathfinding algorithm
 
-TODO: Write a description here
+[![GitHub release](https://img.shields.io/github/release/petoem/a-star.cr.svg?style=flat-square)](https://github.com/petoem/a-star.cr/releases)
+[![Travis](https://img.shields.io/travis/petoem/a-star.cr.svg?style=flat-square)](https://travis-ci.org/petoem/a-star.cr)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/petoem/a-star.cr/blob/master/LICENSE)
 
 ## Installation
 
