@@ -45,6 +45,8 @@ else
 end
 ```
 
+See [examples](examples) directory for more.
+
 ## Contributing
 
 1. [Fork it](https://github.com/petoem/a-star.cr/fork)
