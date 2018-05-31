@@ -72,8 +72,9 @@ module AStar
       self
     end
 
+    # Appends `#data` to the given IO object.
     def to_s(io : IO) : Nil
-      io << @name
+      io << @data
     end
   end
 end

@@ -64,4 +64,14 @@ describe AStar do
     end
     path.should eq([a, b, c, d, e])
   end
+
+  it "Node#to_s(io) appends correct data" do
+    io = IO::Memory.new
+    AStar::Node.new("Spec").to_s io
+    io.to_s.should eq("Spec")
+
+    io.clear
+    AStar::Node.new({spec: true}).to_s io
+    io.to_s.should eq("{spec: true}")
+  end
 end
