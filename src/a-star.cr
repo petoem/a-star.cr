@@ -14,7 +14,7 @@ module AStar
     start.f = yield start, goal
 
     until open.empty?
-      current = open.sort! { |a, b| a.f <=> b.f }.first
+      current = open.min_by { |a| a.f }
       return reconstruct_path goal if current == goal
 
       open.delete current
